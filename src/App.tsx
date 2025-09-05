@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import PhotoSection from "./components/PhotoSection";
 import MessageSection from "./components/MessageSection";
 import TimelineSection from "./components/TimelineSection";
+import MusicSection from "./components/MusicSection";
 import Footer from "./components/Footer";
 import ScrollHint from "./components/ScrollHint";
 import SplashScreen from "./components/ui/SplashScreen";
@@ -139,6 +140,7 @@ export default function App() {
 
   const sections = [
     <Header theme={theme} basic={data?.basic} />,
+    <MusicSection theme={theme} music={data?.music} customText={data?.customText} />,
     <PhotoSection
       theme={theme}
       photos={data?.photos}
@@ -185,7 +187,7 @@ export default function App() {
               ref={(el) => {
                 sectionsRef.current[i] = el;
               }}
-              className="snap-start h-screen w-full relative"
+              className="snap-start h-screen w-full relative overflow-hidden"
             >
               {section}
             </section>

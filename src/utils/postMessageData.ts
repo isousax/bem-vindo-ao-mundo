@@ -6,6 +6,8 @@ export interface DedicationData {
     assign: string;
     sub_title_final: string;
     title_journey: string;
+    music_phrase: string;
+    music_description: string;
   };
   basic: {
     email: string;
