@@ -17,54 +17,42 @@ export default function App() {
   const [data, setData] = useState<DedicationData | null>(null);
   const touchStartY = useRef<number | null>(null);
   const [loading, setLoading] = useState(true);
-
-  // Efeito de carregamento simulado
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-      // Dados mock para demonstração
-      setData({
-        customText: {
-          title_photos: "Momentos Especiais Edited",
-          title_message: "Mensagem dos Papais Edited",
-          message:
-            "Desde o momento em que descobrimos que você estava a caminho, nossos corações se encheram de amor e esperança. Cada ultrassom, cada chute, cada movimento era uma emoção nova. Agora, com você em nossos braços, entendemos o verdadeiro significado do amor incondicional. Que sua vida seja repleta de saúde, alegria e descobertas. Amamos você mais do que palavras podem expressar! Edited",
-          assign: "Mamãe e Papai Edited",
-          sub_title_final: "Nosso Presente Mais Precioso Edited",
-          title_journey: "Nossa Jornada Edited",
-        },
-        basic: {
-          email: "italowilliams2020@gmail.com",
-          nome_baby: "João",
-          sexo_baby: "Menina",
-          data_nascimento: "2025-09-04T11:28",
-          peso_baby: "2,000",
-          altura_baby: "50",
-          data_pregnancy: "2025-09-17",
-          data_ultrasound: "2025-09-03",
-          data_sex: "2025-09-09",
-        },
-        photos: [
-          {
-            preview:
-              "https://dedicart-file-worker.dedicart.workers.dev/file/temp/bem_vindo_ao_mundo/1756996149980.jpeg",
-            title: "title",
-            description: "desc",
-          },
-        ],
-        music: {
-          title:
-            "Xamã - Aeromoça Feat. Flora Matos | Prod. Take a Day Trip (Fragmentado)",
-          url: "https://www.youtube.com/watch?v=K7Mfhu64jvE",
-          channel: "Xamã",
-        },
-      });
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const scrollCooldown = useRef(false);
+
+  // handshake/fallback refs (sem annotations TS)
+  const receivedFromParent = useRef(false);
+  const parentOriginRef = useRef("https://dedicart.com.br");
+  const fallbackFetchTimeoutRef = useRef(null);
+
+  //recebe dados via postMessage
+  useEffect(() => {
+    function onMessage(e: MessageEvent) {
+      const msg = e.data;
+      if (!msg || typeof msg !== "object") return;
+      if (e.origin !== "https://dedicart.com.br") return;
+
+      if (msg.type === "DEDICATION_DATA") {
+        parentOriginRef.current = e.origin || "*";
+        setData(msg.payload);
+        receivedFromParent.current = true;
+        setLoading(false);
+        if (fallbackFetchTimeoutRef.current) {
+          clearTimeout(fallbackFetchTimeoutRef.current);
+          fallbackFetchTimeoutRef.current = null;
+        }
+      }
+    }
+
+    window.addEventListener("message", onMessage);
+
+    return () => {
+      window.removeEventListener("message", onMessage);
+      if (fallbackFetchTimeoutRef.current) {
+        clearTimeout(fallbackFetchTimeoutRef.current);
+        fallbackFetchTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {
@@ -157,7 +145,11 @@ export default function App() {
       customText={data?.customText}
     />,
     <MessageSection theme={theme} customText={data?.customText} />,
-    <TimelineSection theme={theme} customText={data?.customText} basic={data?.basic} />,
+    <TimelineSection
+      theme={theme}
+      customText={data?.customText}
+      basic={data?.basic}
+    />,
     <Footer theme={theme} customText={data?.customText} basic={data?.basic} />,
   ];
 
