@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import type { propsTheme } from "../utils/theme";
 import type { DedicationData } from "../utils/postMessageData";
 
@@ -159,18 +160,27 @@ export default function PhotoSection({
   return (
     <section
       className={`photo-section ${theme.gradientLow} text-center min-h-screen min-w-full flex flex-col items-center justify-center p-4 py-12`}
+      aria-label="Seção de fotos"
     >
-      <h2
+      <motion.h2
         className={`${
           theme.sex === "F" ? "line-title-f" : "line-title-m"
         } text-3xl md:text-5xl font-semibold mb-8 ${theme.primary}`}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
         {customText?.title_photos || "Momentos Especiais"}
-      </h2>
+      </motion.h2>
 
       {/* Carrossel para Mobile */}
       <div className="carousel-container md:hidden">
-        <div className="carousel-wrapper relative">
+        <motion.div
+          className="carousel-wrapper relative overflow-hidden rounded-2xl shadow-xl"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <div
             className="carousel-track"
             style={{ transform: `translateX(-${currentIndex * 100}%)` }}
@@ -195,7 +205,7 @@ export default function PhotoSection({
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Controles do Carrossel */}
         <div className="carousel-controls flex justify-center mt-4 space-x-2">

@@ -74,7 +74,7 @@ export default function Header({
         style={{
           position: "absolute",
           inset: 0,
-          zIndex: 11,
+          zIndex: 3,
           pointerEvents: "none",
         }}
       >

@@ -8,7 +8,7 @@ export default function MessageSection({
   customText?: DedicationData["customText"];
 }) {
   return (
-    <section className={`relative py-16 px-4 ${theme.colorBgMessage} min-h-screen min-w-full flex items-center justify-center`}>
+    <section className={`relative py-16 px-4 ${theme.colorBgMessage} min-h-screen min-w-full flex flex-col items-center justify-center`}>
       {/* Elementos decorativos */}
       <div className="absolute top-10 left-5 text-6xl md:text-8xl text-rose-100 opacity-60">
         ❝
@@ -31,8 +31,8 @@ export default function MessageSection({
             “
           </div>
 
-          <p className="text-lg md:text-xl text-white/90 leading-relaxed md:leading-loose mb-6 md:mb-8 relative z-10">
-            { customText?.message || "Querida Sophia, desde o momento em que descobrimos que você estava a caminho, nossos corações se encheram de amor e esperança. Cada ultrassom, cada chute, cada movimento era uma emoção nova. Agora, com você em nossos braços, entendemos o verdadeiro significado do amor incondicional. Que sua vida seja repleta de saúde, alegria e descobertas. Amamos você mais do que palavras podem expressar!"}
+          <p className="text-[14px] md:text-xl text-white/90 leading-relaxed md:leading-loose mb-6 md:mb-8 relative z-10 max-w-4xl max-h-[55dvh] overflow-y-auto mx-auto w-full">
+            { customText?.message || "Desde o momento em que descobrimos que você estava a caminho, nossos corações se encheram de amor e esperança. Cada ultrassom, cada chute, cada movimento era uma emoção nova. Agora, com você em nossos braços, entendemos o verdadeiro significado do amor incondicional. Que sua vida seja repleta de saúde, alegria e descobertas. Amamos você mais do que palavras podem expressar!"}
           </p>
 
           <div className="flex items-center justify-end">

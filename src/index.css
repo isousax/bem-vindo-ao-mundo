@@ -183,6 +183,13 @@ body {
   right: 9px;
 }
 
+.borda-brilhante {
+  border-radius: 15px;
+  animation: glow 1.5s ease-in-out infinite;
+  box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff,
+    0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff;
+}
+
 /* ----------------------------
    Animação
    ---------------------------- */
@@ -201,6 +208,8 @@ body {
     transform: translateY(-5px) translateX(15px);
   }
 }
+
+
 
 /* ----------------------------
    Responsividade
@@ -291,13 +300,6 @@ body {
 
 .info-card:active {
   transform: scale(0.95);
-}
-
-.borda-brilhante {
-  border-radius: 15px;
-  animation: glow 1.5s ease-in-out infinite;
-  box-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 15px #ffffff,
-    0 0 20px #ffffff, 0 0 30px #ffffff, 0 0 40px #ffffff, 0 0 50px #ffffff;
 }
 
 /* Melhorias de responsividade */
