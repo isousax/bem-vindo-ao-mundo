@@ -2,16 +2,38 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { propsTheme } from "../utils/theme";
 import type { DedicationData } from "../utils/postMessageData";
+import PhotoCarousel from "./ui/PhotoCarousel";
 
 export default function PhotoSection({
   theme,
-  photos = [],
+  photos = [
+    {
+      preview:
+        "https://dedicart-file-worker.dedicart.workers.dev/file/temp/bem_vindo_ao_mundo/1756996149980.jpeg",
+      title: "Coração Ardente",
+      description:
+        "Em meio à vida cotidiana, você é o fogo que ilumina meu caminho, aquecendo meu coração com seu amor incondicional.",
+    },
+    {
+      preview:
+        "https://dedicart-file-worker.dedicart.workers.dev/file/temp/bem_vindo_ao_mundo/1756996149980.jpeg",
+      title: "Coração Ardente",
+      description:
+        "Em meio à vida cotidiana, você é o fogo que ilumina meu caminho, aquecendo meu coração com seu amor incondicional.",
+    },
+    {
+      preview:
+        "https://dedicart-file-worker.dedicart.workers.dev/file/temp/bem_vindo_ao_mundo/1756996149980.jpeg",
+      title: "Coração Ardente",
+      description:
+        "Em meio à vida cotidiana, você é o fogo que ilumina meu caminho, aquecendo meu coração com seu amor incondicional.",
+    }
+  ],
   customText,
 }: propsTheme & {
   photos?: DedicationData["photos"];
   customText?: DedicationData["customText"];
 }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [viewMode, setViewMode] = useState<"grid" | "carousel">("grid");
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
 
@@ -53,22 +75,6 @@ export default function PhotoSection({
 
     return () => observer.disconnect();
   }, [viewMode]);
-
-  const nextPhoto = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === photos.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevPhoto = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? photos.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToPhoto = (index: number) => {
-    setCurrentIndex(index);
-  };
 
   const openLightbox = (index: number) => {
     setSelectedPhoto(index);
@@ -124,7 +130,7 @@ export default function PhotoSection({
               <img
                 src={photos[selectedPhoto].preview}
                 alt={photos[selectedPhoto].title}
-                className="max-w-full max-h-[80vh] object-contain"
+                className="max-w-full max-h-[80dvh] object-contain"
               />
               <div className="photo-info text-white mt-4 text-center">
                 <h3 className="font-bold text-xl">
@@ -174,101 +180,16 @@ export default function PhotoSection({
       </motion.h2>
 
       {/* Carrossel para Mobile */}
-      <div className="carousel-container md:hidden">
-        <motion.div
-          className="carousel-wrapper relative overflow-hidden rounded-2xl shadow-xl"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div
-            className="carousel-track"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-          >
-            {photos.map((photos) => (
-              <div
-                className="carousel-item aspect-[3/4] w-full flex-shrink-0"
-                key={photos.preview}
-              >
-                <div className="carousel-image-container h-full mx-2 rounded-2xl overflow-hidden shadow-lg relative">
-                  <img
-                    src={photos.preview}
-                    alt={photos.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="carousel-caption absolute bottom-0 left-0 right-0 bg-black/70 text-white p-3">
-                    <h3 className="font-bold text-sm">{photos.title}</h3>
-                    <p className="text-xs">{photos.description}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Controles do Carrossel */}
-        <div className="carousel-controls flex justify-center mt-4 space-x-2">
-          {photos.map((_, index) => (
-            <button
-              key={index}
-              className={`w-2 h-2 rounded-full ${
-                currentIndex === index ? `${theme.colorBg}` : "bg-gray-300"
-              }`}
-              onClick={() => goToPhoto(index)}
-              aria-label={`Ir para foto ${index + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Botões de navegação */}
-        <div className="carousel-nav-buttons flex justify-between items-center mt-4 px-4">
-          <button
-            className="carousel-button prev bg-white p-2 rounded-full shadow-md mb-4"
-            onClick={prevPhoto}
-            aria-label="Foto anterior"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-6 w-6 ${theme.primary}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-
-          <button
-            className="carousel-button next bg-white p-2 rounded-full shadow-md mb-4"
-            onClick={nextPhoto}
-            aria-label="Próxima foto"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-6 w-6 ${theme.primary}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
+      <div className="md:hidden w-full">
+        <PhotoCarousel
+          photos={photos}
+          showNavigation={false} // remove as setas no mobile
+          slidesPerViewMobile={1}
+        />
       </div>
 
       {/* Grid para Desktop */}
-      {renderDesktopGrid()}
+      <div className="hidden md:block">{renderDesktopGrid()}</div>
     </section>
   );
 }

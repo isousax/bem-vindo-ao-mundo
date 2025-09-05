@@ -25,6 +25,22 @@ export default function App() {
   const parentOriginRef = useRef("https://dedicart.com.br");
   const fallbackFetchTimeoutRef = useRef(null);
 
+  useEffect(() => {
+    const setVh = () => {
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight * 0.01}px`
+      );
+    };
+    setVh();
+    window.addEventListener("resize", setVh);
+    window.addEventListener("orientationchange", setVh);
+    return () => {
+      window.removeEventListener("resize", setVh);
+      window.removeEventListener("orientationchange", setVh);
+    };
+  }, []);
+
   //recebe dados via postMessage
   useEffect(() => {
     function onMessage(e: MessageEvent) {
@@ -140,7 +156,11 @@ export default function App() {
 
   const sections = [
     <Header theme={theme} basic={data?.basic} />,
-    <MusicSection theme={theme} music={data?.music} customText={data?.customText} />,
+    <MusicSection
+      theme={theme}
+      music={data?.music}
+      customText={data?.customText}
+    />,
     <PhotoSection
       theme={theme}
       photos={data?.photos}

@@ -635,7 +635,6 @@ body {
 .scroll-down {
   position: absolute;
   bottom: 5px;
-  left: 50%;
   transform: translateX(-50%);
   color: #5a5a5a;
   font-size: 2rem;
