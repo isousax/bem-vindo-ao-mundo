@@ -66,7 +66,7 @@ export default function PhotoCarousel({
           dynamicBullets: true,
         }}
         autoplay={{
-          delay: 3500,
+          delay: 4000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}

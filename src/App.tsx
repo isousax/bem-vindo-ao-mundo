@@ -149,7 +149,7 @@ export default function App() {
     }
   };
 
-  if (loading || !data) return <SplashScreen />;
+  //if (loading || !data) return <SplashScreen />;
 
   const theme =
     babyThemes[data?.basic?.sexo_baby === "Menina" ? "menina" : "menino"];

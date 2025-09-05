@@ -530,6 +530,21 @@ body {
   }
 }
 
+.mySwiper .swiper-slide {
+  transition: transform 0.72s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease !important;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.mySwiper .swiper-slide img {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center center;
+}
+/* suaviza o efeito fade nas imagens (quando effect: 'fade') */
+.swiper-wrapper .swiper-slide.swiper-slide-visible {
+  opacity: 1 !important;
+}
+
 /* Seção de Mensagem - Mobile First */
 .message-box {
   transform: translateY(20px);
