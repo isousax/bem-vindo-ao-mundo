@@ -8,7 +8,7 @@ export default function ScrollHint({
   className?: string;
 }) {
   return (
-    <div className="fixed inset-x-0 bottom-2 flex justify-center pointer-events-none z-50">
+    <div className="fixed inset-x-0 bottom-1 flex justify-center pointer-events-none z-50">
       <motion.div
         onClick={onClick}
         role="button"

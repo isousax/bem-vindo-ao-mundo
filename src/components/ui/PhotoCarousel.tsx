@@ -66,7 +66,7 @@ export default function PhotoCarousel({
           dynamicBullets: true,
         }}
         autoplay={{
-          delay: 4000,
+          delay: 3600,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
@@ -83,10 +83,10 @@ export default function PhotoCarousel({
         }}
         allowTouchMove={true}
         className="mySwiper"
-        style={{ maxWidth: "100vw" }}
+        style={{ maxWidth: "100dvw" }}
       >
         {photos.map((photo, i) => (
-          <SwiperSlide key={i} style={{ width: "min(300px, 90vw)" }}>
+          <SwiperSlide key={i} style={{ width: "min(300px, 90dvw)" }}>
             <div className="aspect-[3/4] rounded-xl overflow-hidden relative group">
               <img
                 src={photo.preview}
